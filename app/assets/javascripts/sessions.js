@@ -1,5 +1,4 @@
 $(function(){
-	console.log("Page load sessions.js")
 	$("#loginform").submit(function(e){
 		e.preventDefault();
 		var formData = $(this).serialize();

@@ -1,5 +1,4 @@
 $(function(){
-	console.log("Page load users js")
 	$("#signupform").submit(function(e){
 		e.preventDefault();
 		var formData = $(this).serialize();

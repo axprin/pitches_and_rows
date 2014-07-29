@@ -57,6 +57,16 @@ class Score < ActiveRecord::Base
     [self.title, range]
   end
 
+  def get_frequencies
+    part_frequencies = []
+    self.parts.each do |part|
+      sci_notations = part.notes.map{|note| note.sci_notation}.compact.map{|note| note.downcase}
+      part_frequencies << [part.instrument_name] +sci_notations.map{|note| NoteFrequencies.frequency_from_name(note)}
+
+    end
+    part_frequencies
+  end
+
   def self.get_ranges
     ranges = []
     Score.all.each {|score| ranges << score.get_range}

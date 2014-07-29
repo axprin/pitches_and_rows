@@ -1,7 +1,3 @@
-console.log(gon.scores)
-console.log(gon.scores.music_xml.url)
-console.log(Vex.Flow)
-
 function getParameter(name) {
   name = name.replace(/\[]/, "\\\[").replace(/[\]]/, "\\\]");
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -16,7 +12,6 @@ function getParameter(name) {
    if (! uri) uri = gon.scores.music_xml.url;
    req.open('GET', uri, true);
    req.onreadystatechange = function() {
-     console.log(req)
      if (req.readyState != 4) return;
      doc = new Vex.Flow.Document(req.responseText);
      doc.getFormatter().setWidth(800).draw($("#viewer")[0]);
