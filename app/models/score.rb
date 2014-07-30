@@ -6,22 +6,21 @@ class Score < ActiveRecord::Base
   has_many :parts
   has_many :measures, through: :parts
   has_many :notes, through: :measures
-  validates :title, :user_id, presence: :true
+
+  validates :title, presence: true
+  validates :user, presence: true
+  validates :composer, presence: true
 
   mount_uploader :music_xml, OriginalScorePhotoUploader
 
+  after_create :create_parts
 
   def self.search(search)
     @scores = where('title LIKE ? OR composer LIKE ? ', "%#{search}%", "%#{search}%")
   end
 
-
-  after_create :create_parts
-
-
   def create_parts
-    music_xml_file = open("public/#{self.music_xml.url}")
-    $hash = Hash.from_xml(File.read(music_xml_file))
+    $hash = Hash.from_xml(music_xml.file.read)
 
     parts = $hash["score_partwise"]["part_list"]["score_part"]
     parts = [parts] if parts.is_a?(Hash)
